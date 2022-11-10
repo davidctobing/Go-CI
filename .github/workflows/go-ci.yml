@@ -38,9 +38,9 @@ jobs:
       run: kubectl get pods -A      
     - name: Deploy to minikube
       run: |
-        kubectl create namespace ci-cd
-        kubectl apply -f Manifests/deployment.yml 
-        kubectl apply -f Manifests/deployment.yml
+        kubectl create namespace ci-cd \
+        kubectl apply -f Manifests/deployment.yml \
+        kubectl apply -f Manifests/deployment.yml \
     - name: Get Services
       run: |
         minikube get svc -n ci-cd        
