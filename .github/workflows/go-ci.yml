@@ -27,9 +27,13 @@ jobs:
       run: docker push daluto/go-cicd --all-tags
 
   deploy:
+
     needs : build 
+
     runs-on: ubuntu-latest
+
     name: deploy to minikube
+
     steps:
     - uses: actions/checkout@v2
     - name: Start minikube
@@ -39,9 +43,9 @@ jobs:
     - name: Deploy to minikube
       run: |
         kubectl apply -f Manifests/ns.yml &&
-        kubectl apply -f Manifests/deployment.yml &&
+        kubectl apply -f Manifests/service.yml &&
         kubectl apply -f Manifests/deployment.yml
-    - name: Get Services
+    - name: Get Services and pods
       run: |
         kubectl get svc -n ci-cd &&
-        kubectl get pods -n ci-cd        
+        kubectl get pods -n ci-cd 
