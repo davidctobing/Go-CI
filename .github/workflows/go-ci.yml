@@ -43,4 +43,5 @@ jobs:
         kubectl apply -f Manifests/deployment.yml
     - name: Get Services
       run: |
-        minikube get svc -n ci-cd        
+        kubectl get svc -n ci-cd &&
+        kubectl get pods -n ci-cd        
