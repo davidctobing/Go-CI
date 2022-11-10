@@ -27,6 +27,7 @@ jobs:
       run: docker push daluto/go-cicd --all-tags
 
   deploy:
+    needs : build 
     runs-on: ubuntu-latest
     name: deploy to minikube
     steps:
@@ -36,10 +37,10 @@ jobs:
     - name: Try the cluster !
       run: kubectl get pods -A      
     - name: Deploy to minikube
-      run:
+      run: |
         kubectl create namespace ci-cd
+        kubectl apply -f Manifests/deployment.yml 
         kubectl apply -f Manifests/deployment.yml
-        kubectl apply -f Manifests/deployment.yml
-    - name: Test service URLs
+    - name: Get Services
       run: |
         minikube get svc -n ci-cd        
