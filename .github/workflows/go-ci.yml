@@ -38,7 +38,7 @@ jobs:
     - uses: actions/checkout@v2
     - name: Start minikube
       uses: medyagh/setup-minikube@master
-    - name: Try the cluster !
+    - name: Check the cluster
       run: kubectl get pods -A      
     - name: Deploy to minikube
       run: |
@@ -47,5 +47,6 @@ jobs:
         kubectl apply -f Manifests/deployment.yml
     - name: Get Services and pods
       run: |
+        kubectl get namespaces &&
         kubectl get svc -n ci-cd &&
         kubectl get pods -n ci-cd 
