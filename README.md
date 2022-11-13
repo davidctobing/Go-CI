@@ -15,7 +15,7 @@ For the CI/CD diagram, we can see in the image that I have made: </br>
  <center><figcaption> CI/CD Flow Diagram.</figcaption> <br> </br> </center>
 
 I will explain each steps in this documentation :
-<!-- GETTING STARTED -->
+
 All jobs starts when the developer makes a pull request or push into the master branch which will trigger the pipeline and will run automatically. <br>
 We can see in this script (<a href=".github/workflows/go-ci.yml">go-ci.yml</a>): <br>
 
@@ -26,6 +26,12 @@ We can see in this script (<a href=".github/workflows/go-ci.yml">go-ci.yml</a>):
   pull_request:
     branches: [ master ]
   ```
+
+  After that the pipeline will run by building images and pushing images to dockerhub and deploying to minikube using images with the latest tag.
+
+  For more details I divide into 2 jobs namely Build and Deploy:
+
+
 ## Buid Jobs (CI process)
 
 Continuous Integration (CI) is the process of merging or integrating code that has been created by a number of development teams into a code repository, to then run pipeline automatically and continuously. <br>
@@ -167,9 +173,112 @@ This script means that the runner will wait until 60s to wait the container runn
     
 
 <!-- USAGE EXAMPLES -->
-## Demo
+## Let's Try
+Here I will give an example of how the pipeline can run and give an example of the output.
 
-To be continued <br>
+- Make commit and push to master 
+Here I'll create a changes on README.md and push to my Github repository.
+<img src="Capture/trigger.png"> 
+
+- Check The pipeline
+
+Check the pipeline whether it is running or not by going to https://github.com/davidctobing/Go-CI/actions
+<img src="Capture/action.png"> 
+as we can see the pipeline is successful to the trigger and the process is running.
+
+### Build Jobs
+- After the build jobs are finished check if the image has been pushed to docker images
+<img src="Capture/dockerpush.png">
+- and go to dockerhub check images
+<img src="Capture/dockerhub.png">
+It can be seen that the image with the latest tag has been successfully pushed to Dockerhub.
+
+- We can try to pull images and run our local.
+   ```sh
+  docker pull docker push daluto/go-cicd:latest
+  docker run --rm -d  -p 3000:3000/tcp daluto/go-cicd:latest 
+  ```
+open localhost on browser
+<img src="Capture/localhost.png">
+and it can run on local sucessfully 
+
+### Deploy Jobs
+- Check the deploy jobs whether it is finished or not.
+<img src="Capture/deploy.png">
+As shown in the picture all the scripts in jobs deploy have finished running
+
+- Check the Manifests 
+To check the manifests have been successfully deployed or not to minikube, open  "Deploy to minikube" section
+<img src="Capture/applymanifest.png"> <br>
+Then the manifests successfully applied.
+
+- Check services and pods
+
+To see if namespaces,services,and pods are running successfully, look under Deploy to Minikube.
+<img src="Capture/checkpods.png">
+
+As we see the namespaces,services,and pod are running.
+
+## Manifests
+A Kubernetes manifest is a YAML file that describes each component or resource of your deployment and the state you want your cluster to be in once applied.
+
+Here I have provided some manifests if you want to try the deploy manial on your Kubernetes cluster.
+I provide 3 manifests:
+- ### Namespaces "ns.yml" 
+To create namespaces with ci-cd name
+   ```sh
+  apiVersion: v1
+  kind: Namespace
+  metadata:
+    name: ci-cd 
+  ```
+ ### Service (service.yml)
+provides a definition of a logical set of Pods and a policy on how you access that set of Pods. Here i create services with name go-web-app-svc.
+   ```sh
+    apiVersion: v1
+    kind: Service
+    metadata:
+      name: go-web-app-svc
+      namespace: ci-cd
+    spec:
+      type: LoadBalancer
+      ports:
+      - name: http
+        port: 80
+        targetPort: 3000
+      selector:
+        name: go-web-app
+   ```
+- ### Deploy (deploy.yml)
+Deployments provide declarative updating of Pods and ReplicaSets. 
+Here i make deploy with name  go-web-app using images from  daluto/go-cicd:latest.
+
+   ```sh
+    ---
+    apiVersion: apps/v1
+    kind: Deployment
+    metadata:
+      name: go-web-app
+      namespace: ci-cd
+    spec:
+      replicas: 1
+      selector:
+        matchLabels:
+          name: go-web-app
+      template:
+        metadata:
+          labels:
+            name: go-web-app
+        spec:
+          containers:
+          - name: application
+            image: daluto/go-cicd:latest
+            imagePullPolicy: IfNotPresent
+            ports:
+              - containerPort: 3000
+   ```
+
+done :)
 
 
 <!-- CONTACT -->
