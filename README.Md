@@ -148,7 +148,7 @@ After minikube is successfully installed, the images that are built but will be 
         kubectl apply -f Manifests/service.yml &&
         kubectl apply -f Manifests/deployment.yml
     ```
-- Sleep for 30 seconds
+- Sleep for 60 seconds
 This script means that the runner will wait until 60s to wait the container running on minikube.
     ```sh
      uses: jakejarvis/wait-action@master
