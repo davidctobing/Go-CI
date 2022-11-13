@@ -45,6 +45,10 @@ jobs:
         kubectl apply -f Manifests/ns.yml &&
         kubectl apply -f Manifests/service.yml &&
         kubectl apply -f Manifests/deployment.yml
+    - name: Sleep for 30 seconds
+      uses: jakejarvis/wait-action@master
+      with:
+        time: '30s
     - name: Get Services and pods
       run: |
         kubectl get namespaces &&
