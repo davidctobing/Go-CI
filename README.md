@@ -176,11 +176,12 @@ This script means that the runner will wait until 60s to wait the container runn
 ## Let's Try
 Here I will give an example of how the pipeline can run and give an example of the output.
 
-- Make commit and push to master 
+-  Make commit and push to master 
 Here I'll create a changes on README.md and push to my Github repository
+
 <img src="Capture/trigger.png"> 
 
-- Check The pipeline
+-  Check The pipeline
 
 Check the pipeline whether it is running or not by going to https://github.com/davidctobing/Go-CI/actions
 <img src="Capture/action.png"> 
