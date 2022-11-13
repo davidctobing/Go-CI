@@ -48,7 +48,7 @@ jobs:
     - name: Sleep for 30 seconds
       uses: jakejarvis/wait-action@master
       with:
-        time: '30s
+        time: '60s'
     - name: Get Services and pods
       run: |
         kubectl get namespaces &&
