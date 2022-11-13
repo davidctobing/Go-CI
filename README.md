@@ -209,12 +209,15 @@ As shown in the picture all the scripts in jobs deploy have finished running
 
 - Check the Manifests 
 To check the manifests have been successfully deployed or not to minikube, open  "Deploy to minikube" section
+
 <img src="Capture/applymanifest.png"> <br>
+
 Then the manifests successfully applied.
 
 - Check services and pods
 
 To see if namespaces,services,and pods are running successfully, look under Deploy to Minikube.
+
 <img src="Capture/checkpods.png">
 
 As we see the namespaces,services,and pod are running.
@@ -224,7 +227,7 @@ A Kubernetes manifest is a YAML file that describes each component or resource o
 
 Here I have provided some manifests if you want to try the deploy manial on your Kubernetes cluster.
 I provide 3 manifests:
-- ### Namespaces "ns.yml" 
+- ### Namespaces (ns.yml)
 To create namespaces with ci-cd name
    ```sh
   apiVersion: v1
