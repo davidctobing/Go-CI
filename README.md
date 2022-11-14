@@ -16,7 +16,7 @@ For the CI/CD diagram, we can see in the image that I have made: </br>
 
 I will explain each steps in this documentation :
 
-All jobs starts when the developer makes a pull request or push into the master branch which will trigger the pipeline and will run automatically. <br>
+All jobs starts when the developer makes a pull request and push into the master branch which will trigger the pipeline and will run automatically. <br>
 We can see in this script (<a href=".github/workflows/go-ci.yml">go-ci.yml</a>): <br>
 
   ```sh
@@ -32,7 +32,7 @@ We can see in this script (<a href=".github/workflows/go-ci.yml">go-ci.yml</a>):
   For more details I divide into 2 jobs namely Build and Deploy:
 
 
-## Buid Jobs (CI process)
+## Build Jobs (CI process)
 
 Continuous Integration (CI) is the process of merging or integrating code that has been created by a number of development teams into a code repository, to then run pipeline automatically and continuously. <br>
 
@@ -88,7 +88,7 @@ the script to push the images to DockerHub we can see here: <br>
         - name: Docker Push
       run: docker push daluto/go-cicd --all-tags 
   ```
-That's all for the Build jobs. Now we GO to Deploy stages: 
+That's all for the Build jobs. Now we go to Deploy stages: 
 
 ## Deploy Jobs (CD process)
 Continuous Delivery (CD) is an advanced process from CI that prepares code changes to deploy staging or pre-production stages after the build process manually. Code that goes on CD must pass automated unit testing, integration testing, and system testing. <br> <br>
