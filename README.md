@@ -88,6 +88,12 @@ the script to push the images to DockerHub we can see here: <br>
         - name: Docker Push
       run: docker push daluto/go-cicd --all-tags 
   ```
+
+
+If you want to check docker images you can go to this link: 
+<a href="https://hub.docker.com/repository/docker/daluto/go-cicd"> https://hub.docker.com/repository/docker/daluto/go-cicd </a>
+
+
 That's all for the Build jobs. Now we go to Deploy stages: 
 
 ## Deploy Jobs (CD process)
